@@ -1,6 +1,10 @@
 from flask import Blueprint
+import DAO.db_dao as DAO
 
 bp = Blueprint("views", __name__)
+streets_db = DAO.StreetsDAO().get_all()
+districts_db = DAO.DistrictsDAO().get_all()
+volunteers_db = DAO.VolunteersDAO().get_all()
 
 
 @bp.route("/streets")
