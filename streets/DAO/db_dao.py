@@ -1,13 +1,28 @@
 import requests
 from pprint import pprint as pp
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
+@dataclass
 class Districts:
-    def __init__(self, id, title, streets):
-        self.id = id
-        self.title = title
-        self.streets = streets
+    id: int
+    title: str
+    streets: list[int] = field(default_factory=list)
+
+
+@dataclass
+class Streets:
+    id: int
+    title: str
+    volunteer: list[int] = field(default_factory=list)
+
+
+@dataclass
+class Volunteers:
+    id: int
+    name: str
+    userpic: str
+    phone: str
 
 
 class DistrictsDAO:
@@ -20,16 +35,9 @@ class DistrictsDAO:
         districts = []
         for key, value in self.load_data().items():
             districts.append(
-                Districts(id=key, title=value["title"], streets=value["streets"])
+                Districts(id=int(key), title=value["title"], streets=value["streets"])
             )
         return districts
-
-
-class Streets:
-    def __init__(self, id, title, volunteer):
-        self.id = id
-        self.title = title
-        self.volunteer = volunteer
 
 
 class StreetsDAO:
@@ -42,17 +50,15 @@ class StreetsDAO:
         streets = []
         for key, value in self.load_data().items():
             streets.append(
-                Streets(id=key, title=value["title"], volunteer=value["volunteer"])
+                Streets(id=int(key), title=value["title"], volunteer=value["volunteer"])
             )
         return streets
 
-
-class Volunteers:
-    def __init__(self, id, name, userpic, phone):
-        self.id = id
-        self.name = name
-        self.userpic = userpic
-        self.phone = phone
+    def get_streets(self):
+        output = []
+        for item in self.get_all():
+            output.append(item.id, item.title)
+        return output
 
 
 class VolunteersDAO:
@@ -73,7 +79,3 @@ class VolunteersDAO:
                 )
             )
         return volunteers
-
-
-# pp(DistrictsDAO().get_all()[0].title)  # -> 'Прибрежный'
-# pp(VolunteersDAO().get_all()[0].phone)  # -> '+7 (929) 288-75-25'
