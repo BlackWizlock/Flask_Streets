@@ -1,8 +1,8 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, render_template
 from streets.DAO.db_dao import StreetsDAO, DistrictsDAO, VolunteersDAO
 from pprint import pprint as pp
 
-bp = Blueprint("views", __name__)
+bp = Blueprint("views", __name__, template_folder="templates")
 streets_db = StreetsDAO().get_all()
 districts_db = DistrictsDAO().get_all()
 volunteers_db = VolunteersDAO().get_all()
@@ -48,6 +48,8 @@ def views_volunteers():
         )
 
 
-@bp.route("/helpme")
+@bp.route("/helpme", methods=["GET", "POST"])
 def views_helpme():
-    return "I'm a helpme"
+    if request.method == "POST":
+        return f"I'm a POST method"
+    return "I'm a GET method"

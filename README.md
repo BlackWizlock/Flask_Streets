@@ -1,5 +1,10 @@
 # Flask_Streets
 
+to run:
+* export FLASK_APP=streets
+* export FLASK_ENV=development
+* flask run
+
 Дополнительный проект от SkyPro
 
 Link:

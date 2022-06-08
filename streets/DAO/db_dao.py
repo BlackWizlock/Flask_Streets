@@ -2,7 +2,6 @@ import requests
 from pprint import pprint as pp
 from dataclasses import dataclass, field
 
-
 @dataclass
 class Districts:
     id: int
