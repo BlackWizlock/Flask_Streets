@@ -1,5 +1,7 @@
 import requests
 from pprint import pprint as pp
+from dataclasses import dataclass
+
 
 class Districts:
     def __init__(self, id, title, streets):
